@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+:root {
+    @apply bg-[#04091d] max-w-[100vw] w-full min-h-screen overflow-x-hidden;
+}
+
+::-webkit-scrollbar {
+    @apply w-[10px]
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-primary-1/40 rounded-[10px]
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2px grey;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+#animateBackground {
+    @apply overflow-hidden;
+}
+
+  /* Ball styles */
+  .ball {
+    position: absolute;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+  }
+  
+  /* Create a CSS animation using keyframes */
+  @keyframes moveBall {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(10rem, 5rem);
+    }
+  }
+  
+  /* Apply the animation to some of the balls */
+  .ball:nth-child(2n) {
+    animation: moveBall 6s alternate infinite ease-in-out;
+  }
+  
+  /* Additional styles */
+  .ball {
+    /* Copy the ball colors from the JavaScript array */
+    background: #03045e;
+    /* Additional styles to make the balls look like the original animation */
+    width: 2em;
+    height: 2em;
+  }
+  
+  /* Set different colors for each ball using nth-child */
+  .ball:nth-child(3n) {
+    background: #00b4d8;
+  }
+  .ball:nth-child(4n) {
+    background: #d90429;
+  }
+  .ball:nth-child(5n) {
+    background: #ffb703;
+  }
+  .ball:nth-child(6n) {
+    background: #fb8500;
+  }
+  .ball:nth-child(7n) {
+    background: #80ed99;
+  }
+  .ball:nth-child(8n) {
+    background: #a5a58d;
+  }
+  
+
+.text-gradient {
+    @apply text-3xl font-semibold;
+    background: -webkit-linear-gradient(#8d00ce, rgba(0, 0, 0, 0.3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-primary {
+  @apply text-3xl font-semibold text-primary-1;
+}
+
+.glow {
+  box-shadow: -3px 4px 25px 14px rgba(141,0,206,0.54);
+-webkit-box-shadow: -3px 4px 25px 14px rgba(141,0,206,0.54);
+-moz-box-shadow: -3px 4px 25px 14px rgba(141,0,206,0.54);
+}
+
+
+/* .pattern {
+  background-image:  repeating-radial-gradient(circle at 0 0, transparent 0, rgba(41, 41, 43, 0.5) 12px), repeating-linear-gradient(rgba(4, 9, 29, 0.3), rgba(27, 27, 44, 0.466));
+  background-color: #04091d;
+} */
+
+.pattern {
+  background-color: #04091d;
+  background-image: url('/pattern-2.jpg');
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply;
+}
+
+/* .projects-categories-container div {
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+}
+
+.projects-categories-container div:hover {
+  letter-spacing: 0.1em;
+} */
