@@ -5,12 +5,14 @@ import {
     DrawerContent,
     DrawerCloseButton,
     useDisclosure,
+    useToast,
   } from '@chakra-ui/react';
 
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../providers/AuthProvider';
 
-import { useLayoutEffect } from "react"
+import { useContext, useLayoutEffect } from "react"
 import Aos from "aos";
 import "aos/dist/aos.css";
 
@@ -53,6 +55,15 @@ const Header = () => {
           return () => clearTimeout(timeout);
     }, []);
 
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    console.log(location.pathname);
+    
+
+    const authContext = useContext(AuthContext);
+    const toast = useToast();
+
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const handleMenuClick = (event: any, id: string) => {
@@ -62,6 +73,24 @@ const Header = () => {
           targetSection.scrollIntoView({ behavior: "smooth" });
         }
     };
+
+    const handleLogout = () => {
+        authContext?.setUser(null);
+        localStorage.removeItem("authenticatedUser");
+        // Process the response as needed (e.g., check for successful login, handle errors, etc.)
+    
+        toast({
+          title: 'Logged Out',
+          description: 'Redirecting to Home page',
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        });
+  
+        console.log(authContext?.user);
+        
+        navigate('/');
+    }
 
   return (
     <>
@@ -109,7 +138,7 @@ const Header = () => {
                 gap-4
             '
         >
-            {sections.map((section, index) => (
+            {location.pathname !== '/admin/dashboard' && sections.map((section, index) => (
                 <a
                     key={section.id}
                     className={`
@@ -127,6 +156,37 @@ const Header = () => {
                     {section.name}
                 </a>
             ))}
+            {location.pathname === '/admin/dashboard' && authContext?.user !== null && (
+                <>
+                <Link
+                    className={`
+                        uppercase
+                        text-lg
+                        transition-all
+                        duration-300
+                        cursor-pointer
+                        bg-primary-1 px-4 py-2 rounded-full hover:tracking-widest ease-in  text-white
+                    `}
+                    to={'admin/dashboard/create-blog'}
+                >
+                    Create Blog
+                </Link>
+                <button
+                    className={`
+                        uppercase
+                        text-lg
+                        transition-all
+                        duration-300
+                        cursor-pointer
+                        bg-primary-1 px-4 py-2 rounded-full hover:tracking-widest ease-in  text-white
+                        border-none
+                    `}
+                    onClick={handleLogout}
+                >
+                    Logout
+                </button>
+            </>
+            )}
         </nav>
     </header>
     <Drawer
@@ -148,7 +208,7 @@ const Header = () => {
                 gap-4
             '
         >
-            {sections.map((section, index) => (
+            {location.pathname !== '/admin/dashboard' && sections.map((section, index) => (
                 <a
                     key={section.id}
                     className={`
@@ -166,6 +226,39 @@ const Header = () => {
                     {section.name}
                 </a>
             ))}
+            {location.pathname === '/admin/dashboard' && authContext?.user !== null && (
+                <>
+                <Link
+                    className={`
+                        uppercase
+                        text-lg
+                        transition-all
+                        duration-300
+                        cursor-pointer
+                        bg-primary-1 px-4 py-2 rounded-full hover:tracking-widest ease-in  text-white
+                        max-w-fit
+                    `}
+                    to={'admin/dashboard/create-blog'}
+                >
+                    Create Blog
+                </Link>
+                <button
+                    className={`
+                        uppercase
+                        text-lg
+                        transition-all
+                        duration-300
+                        cursor-pointer
+                        bg-primary-1 px-4 py-2 rounded-full hover:tracking-widest ease-in  text-white
+                        border-none
+                        max-w-fit
+                    `}
+                    onClick={handleLogout}
+                >
+                    Logout
+                </button>
+            </>
+            )}
         </nav>
           </DrawerBody>
         </DrawerContent>

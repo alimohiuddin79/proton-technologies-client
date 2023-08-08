@@ -1,10 +1,6 @@
-import { Link } from 'react-router-dom';
-
-import { useEffect, useLayoutEffect, useState } from "react"
-import Aos from "aos";
-import "aos/dist/aos.css";
 import axios from 'axios';
-
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 
 type Blog = {
     _id: string;
@@ -14,17 +10,9 @@ type Blog = {
     shortDesc: string;
 }
 
-const BlogSection = () => {
-
-    useLayoutEffect(() => {
-        const timeout = setTimeout(() => {
-            Aos.init();
-          }, 10);
-      
-          return () => clearTimeout(timeout);
-    }, []);
-    
+const Blogs = () => {
     const [blogs, setBlogs] = useState([]);
+
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -33,8 +21,7 @@ const BlogSection = () => {
           try {
             const response = await axios.get("http://localhost:5000/api/blogs");
             const data = response.data;
-            const slicedData = data.slice(0, 3); // Slice the data array to get the first 3 items
-            return slicedData;
+            return data;
           } catch (error) {
             console.error("Error fetching blogs:", error);
             return [];
@@ -42,8 +29,8 @@ const BlogSection = () => {
         };
     
         fetchBlogs()
-          .then((slicedData) => {
-            setBlogs(slicedData);
+          .then((data) => {
+            setBlogs(data);
             setLoading(false);
           })
           .catch((error) => {
@@ -51,42 +38,31 @@ const BlogSection = () => {
           });
       }, []);
 
-    // const blogs = [
-    //     {
-    //         image: '/blog-1.jpg',
-    //         title: 'Web Designs',
-    //         shortDesc: 'We create web designs that attracts the consumer',
-    //         href: '/blogs/web-designs',
-    //     },
-    //     {
-    //         image: '/blog-2.jpg',
-    //         title: 'UI/UX Designs',
-    //         shortDesc: 'We design best ui/ux designs according to you requirement as soon as possible',
-    //         href: '/blogs/uiux-designs'
-    //     },
-    //     {
-    //         image: '/blog-3.jpg',
-    //         title: 'See Here Projects',
-    //         shortDesc: "Let's check the projects which attracts the users",
-    //         href: '/blogs/projects'
-    //     },
-    // ];
+
   return (
-    <section
-      id="blogs"
+    <main
       className="
+            max-w-screen-xl
+            w-full
+            mx-auto
             flex
             flex-col
-            gap-12
-            py-16
-            px-8
+            px-6
             xl:px-0
-            max-w-screen-xl 
-            w-full 
-            mx-auto
+            py-12
         "
     >
-        <div
+      <h1
+        className="
+                text-4xl
+                text-white
+                font-bold
+                text-center
+            "
+      >
+        Blogs
+      </h1>
+      <div
             className='
                 grid
                 grid-cols-1
@@ -95,9 +71,13 @@ const BlogSection = () => {
                 gap-8
             '
         >
-            {blogs.map((blog: Blog, index) => (
+            {loading ? (
+                <>
+                    <p>Loading...</p>
+                </>
+            ) : blogs.map((blog: Blog, index) => (
                 <Link
-                    to={`/blogs`}
+                    to={`/blogs/${blog._id}`}
                     key={blog._id}
                 >
                     <div
@@ -109,9 +89,6 @@ const BlogSection = () => {
                             text-center
                             group
                         '
-                        data-aos="fade-up"
-                        data-aos-duration="2000"
-                        data-aos-delay={index * 200}
                     >
                         <div>
                             <img
@@ -148,8 +125,8 @@ const BlogSection = () => {
                 </Link>
             ))}
         </div>
-    </section>
+    </main>
   )
 }
 
-export default BlogSection
+export default Blogs

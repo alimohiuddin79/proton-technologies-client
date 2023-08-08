@@ -8,6 +8,10 @@ import { useEffect, useState } from "react";
 import "aos/dist/aos.css";
 import BlogPage from "./pages/Blogs/[blogId]";
 import Admin from "./pages/Admin/Admin";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import CreateBlog from "./pages/Blogs/CreateBlog";
+import EditBlogPage from "./pages/Blogs/[editBlogId]";
+import Blogs from "./pages/Blogs/Blogs";
 
 const colors = ["#03045e", "#00b4d8", "#d90429", "#ffb703", "#fb8500", "#80ed99", "#a5a58d"];
 const numBalls = 60;
@@ -54,15 +58,28 @@ const App = () => {
         const maxLeftPosition = 100 - ballSize;
         ball.style.left = `${Math.floor(Math.random() * maxLeftPosition)}%`;
 
-        if (viewportWidth <= 640) {
-          ball.style.top = `${Math.floor(Math.random() * 1400)}%`;
-        } else if (viewportWidth <= 768) {
-          ball.style.top = `${Math.floor(Math.random() * 1280)}%`;
-        } else if (viewportWidth <= 1024) {
-          ball.style.top = `${Math.floor(Math.random() * 1000)}%`;
+        if (window.innerHeight <= 790) {
+          if (viewportWidth <= 640) {
+            ball.style.top = `${Math.floor(Math.random() * 1400)}%`;
+          } else if (viewportWidth <= 768) {
+            ball.style.top = `${Math.floor(Math.random() * 1280)}%`;
+          } else if (viewportWidth <= 1024) {
+            ball.style.top = `${Math.floor(Math.random() * 1000)}%`;
+          } else {
+            ball.style.top = `${Math.floor(Math.random() * 760)}%`;
+          }
         } else {
-          ball.style.top = `${Math.floor(Math.random() * 760)}%`;
+          if (viewportWidth <= 640) {
+            ball.style.top = `${Math.floor(Math.random() * 840)}%`;
+          } else if (viewportWidth <= 768) {
+            ball.style.top = `${Math.floor(Math.random() * 720)}%`;
+          } else if (viewportWidth <= 1024) {
+            ball.style.top = `${Math.floor(Math.random() * 640)}%`;
+          } else {
+            ball.style.top = `${Math.floor(Math.random() * 400)}%`;
+          }
         }
+        
 
         ball.style.transform = `scale(${Math.random()})`;
 
@@ -110,9 +127,13 @@ const App = () => {
       <div className="">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/admin/dashboard" element={<Dashboard />} />
+          <Route path="/admin/dashboard/create-blog" element={<CreateBlog />} />
           <Route path="/admin/login" element={<Admin />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:blogId" element={<BlogPage />} />
+          <Route path="/admin/dashboard/edit-blog/:editBlogId" element={<EditBlogPage />} />
         </Routes>
       </div>
       <Footer />

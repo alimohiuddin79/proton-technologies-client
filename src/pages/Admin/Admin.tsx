@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { useToast } from '@chakra-ui/react'
+import { useToast } from '@chakra-ui/react';
+import { AuthContext } from '../../providers/AuthProvider';
 import axios from 'axios';
 
 const Admin = () => {
     const navigate = useNavigate();
     const toast = useToast();
-
+    const authContext = useContext(AuthContext);
     const [fields, setFields] = useState({
         email: '',
         password: '',
@@ -21,14 +22,18 @@ const Admin = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/api/users/auth', {
+            const response = await axios.post('http://localhost:5000/api/users/auth', {
               email: fields.email,
               password: fields.password,
+            }, {
+                withCredentials: true,
             });
 
-            console.log(response);
-            
-        
+            const authenticatedUser = await response.data;
+
+            // console.log(authenticatedUser);
+            authContext?.setUser(authenticatedUser);
+            localStorage.setItem("authenticatedUser", JSON.stringify(authenticatedUser));
             // Process the response as needed (e.g., check for successful login, handle errors, etc.)
         
             toast({
@@ -37,8 +42,11 @@ const Admin = () => {
               duration: 5000,
               isClosable: true,
             });
+
+            console.log(authContext?.user);
+            
         
-            navigate('/');
+            navigate('/admin/dashboard');
           } catch (error) {
             // Handle errors, e.g., display error messages to the user, etc.
             toast({
@@ -51,7 +59,12 @@ const Admin = () => {
           }
         };
 
-        
+    
+        useEffect(() => {
+            if (authContext?.user !== null) {
+                navigate('/admin/dashboard');
+            } 
+        }, [authContext?.user, navigate]);
   return (
     <form onSubmit={handleSubmit}>
     <main
