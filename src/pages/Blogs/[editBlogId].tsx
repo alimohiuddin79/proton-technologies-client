@@ -44,7 +44,7 @@ const EditBlogPage = () => {
       setLoading(true);
       const fetchBlog = async () => {
         try {
-          const response = await axios.get(`http://localhost:5000/api/blogs/${editBlogId}`);
+          const response = await axios.get(`https://proton-technologies-server-puce.vercel.app/api/blogs/${editBlogId}`);
   
           const data = response.data;
           return data;
@@ -92,7 +92,7 @@ const EditBlogPage = () => {
                 console.log(fields);
 
                 try {
-                  const response = await axios.put(`http://localhost:5000/api/blogs/${editBlogId}`, {
+                  const response = await axios.put(`https://proton-technologies-server-puce.vercel.app/api/blogs/${editBlogId}`, {
                     title: fields.title,
                     image: fields.image,
                     shortDesc: fields.shortDesc,

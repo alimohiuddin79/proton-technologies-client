@@ -31,7 +31,7 @@ const BlogSection = () => {
         setLoading(true);
         const fetchBlogs = async () => {
           try {
-            const response = await axios.get("http://localhost:5000/api/blogs");
+            const response = await axios.get("https://proton-technologies-server-puce.vercel.app/api/blogs");
             const data = response.data;
             const slicedData = data.slice(0, 3); // Slice the data array to get the first 3 items
             return slicedData;

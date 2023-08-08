@@ -33,7 +33,7 @@ const BlogPage = () => {
     setLoading(true);
     const fetchBlog = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/blogs/${blogId}`);
+        const response = await axios.get(`https://proton-technologies-server-puce.vercel.app/api/blogs/${blogId}`);
 
         const data = response.data;
         return data;

@@ -22,7 +22,7 @@ const Admin = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/users/auth', {
+            const response = await axios.post('https://proton-technologies-server-puce.vercel.app/api/users/auth', {
               email: fields.email,
               password: fields.password,
             }, {

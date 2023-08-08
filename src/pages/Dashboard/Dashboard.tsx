@@ -53,7 +53,7 @@ const Dashboard = () => {
     setLoading(true);
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/blogs");
+        const response = await axios.get("https://proton-technologies-server-puce.vercel.app/api/blogs");
         const data = response.data;
         return data;
       } catch (error) {
@@ -74,7 +74,7 @@ const Dashboard = () => {
 
   const fetchAndUpdateBlogs = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/blogs");
+      const response = await axios.get("https://proton-technologies-server-puce.vercel.app/api/blogs");
       const data = response.data;
       setBlogs(data);
     } catch (error) {
@@ -86,7 +86,7 @@ const Dashboard = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/api/blogs/${id}`, {
+      const response = await axios.delete(`https://proton-technologies-server-puce.vercel.app/api/blogs/${id}`, {
         withCredentials: true,
       });
       onClose();
